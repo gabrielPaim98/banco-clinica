@@ -1,0 +1,479 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "aa741ebe8b79f9c1fb2350353af98cc2",
+    "entities": [
+      {
+        "tableName": "Endereco",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `rua` TEXT NOT NULL, `estado` TEXT NOT NULL, `cidade` TEXT NOT NULL, `cep` TEXT NOT NULL, `numero` TEXT NOT NULL, `bairro` TEXT NOT NULL, `empresa_id` INTEGER NOT NULL, FOREIGN KEY(`empresa_id`) REFERENCES `empresa_cliente`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rua",
+            "columnName": "rua",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "estado",
+            "columnName": "estado",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cidade",
+            "columnName": "cidade",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cep",
+            "columnName": "cep",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "numero",
+            "columnName": "numero",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bairro",
+            "columnName": "bairro",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "empresaId",
+            "columnName": "empresa_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Endereco_empresa_id",
+            "unique": false,
+            "columnNames": [
+              "empresa_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Endereco_empresa_id` ON `${TABLE_NAME}` (`empresa_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "empresa_cliente",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "empresa_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "empresa_cliente",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT NOT NULL, `cnpj` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nome",
+            "columnName": "nome",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cnpj",
+            "columnName": "cnpj",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_empresa_cliente_cnpj_nome",
+            "unique": true,
+            "columnNames": [
+              "cnpj",
+              "nome"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_empresa_cliente_cnpj_nome` ON `${TABLE_NAME}` (`cnpj`, `nome`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Funcionario",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT NOT NULL, `cpf` TEXT NOT NULL, `empresa_id` INTEGER NOT NULL, FOREIGN KEY(`empresa_id`) REFERENCES `empresa_cliente`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nome",
+            "columnName": "nome",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cpf",
+            "columnName": "cpf",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "empresaId",
+            "columnName": "empresa_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Funcionario_empresa_id",
+            "unique": false,
+            "columnNames": [
+              "empresa_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Funcionario_empresa_id` ON `${TABLE_NAME}` (`empresa_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "empresa_cliente",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "empresa_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Exame",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `data` INTEGER NOT NULL, `relatorio` TEXT NOT NULL, `funcionario_id` INTEGER NOT NULL, `atestado_id` INTEGER NOT NULL, `medico_id` INTEGER NOT NULL, FOREIGN KEY(`funcionario_id`) REFERENCES `Funcionario`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`atestado_id`) REFERENCES `Atestado`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`medico_id`) REFERENCES `Medico`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "data",
+            "columnName": "data",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "relatorio",
+            "columnName": "relatorio",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "funcionarioId",
+            "columnName": "funcionario_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "atestadoId",
+            "columnName": "atestado_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicoId",
+            "columnName": "medico_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Exame_funcionario_id",
+            "unique": false,
+            "columnNames": [
+              "funcionario_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Exame_funcionario_id` ON `${TABLE_NAME}` (`funcionario_id`)"
+          },
+          {
+            "name": "index_Exame_atestado_id",
+            "unique": false,
+            "columnNames": [
+              "atestado_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Exame_atestado_id` ON `${TABLE_NAME}` (`atestado_id`)"
+          },
+          {
+            "name": "index_Exame_medico_id",
+            "unique": false,
+            "columnNames": [
+              "medico_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Exame_medico_id` ON `${TABLE_NAME}` (`medico_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Funcionario",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "funcionario_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "Atestado",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "atestado_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "Medico",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medico_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "tipo_exame",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT NOT NULL, `exame_id` INTEGER NOT NULL, FOREIGN KEY(`exame_id`) REFERENCES `Exame`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nome",
+            "columnName": "nome",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exameId",
+            "columnName": "exame_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_tipo_exame_exame_id",
+            "unique": false,
+            "columnNames": [
+              "exame_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tipo_exame_exame_id` ON `${TABLE_NAME}` (`exame_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Exame",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "exame_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Medico",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT NOT NULL, `crm` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nome",
+            "columnName": "nome",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "crm",
+            "columnName": "crm",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Atestado",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `descricao` TEXT NOT NULL, `tipo_atestado_id` INTEGER NOT NULL, FOREIGN KEY(`tipo_atestado_id`) REFERENCES `tipo_atestado`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "descricao",
+            "columnName": "descricao",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tipoAtestadoId",
+            "columnName": "tipo_atestado_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Atestado_tipo_atestado_id",
+            "unique": false,
+            "columnNames": [
+              "tipo_atestado_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Atestado_tipo_atestado_id` ON `${TABLE_NAME}` (`tipo_atestado_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "tipo_atestado",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "tipo_atestado_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "tipo_atestado",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nome",
+            "columnName": "nome",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aa741ebe8b79f9c1fb2350353af98cc2')"
+    ]
+  }
+}
