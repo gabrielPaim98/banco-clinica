@@ -9,8 +9,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
-import br.ucsal.banco_clinica.R
 import br.ucsal.banco_clinica.databinding.FragmentMainBinding
 import br.ucsal.banco_clinica.db.getDatabase
 
@@ -47,13 +45,11 @@ class PlaceholderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView.adapter = RVAdapter(emptyList())
+        binding.recyclerView.adapter = RVAdapter()
 
         pageViewModel.dataList.observe(
             viewLifecycleOwner,
             {
-                Log.d("Clinica", "binding list: s-${it.size}")
-                Log.d("Clinica", "binding list: item- ${it.firstOrNull()?.toString()}")
                 (binding.recyclerView.adapter as RVAdapter).submitList(it)
             }
         )

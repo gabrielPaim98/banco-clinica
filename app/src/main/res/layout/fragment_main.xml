@@ -32,6 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/section_label"
         tools:itemCount="10"
-        tools:listitem="@layout/list_item" />
+        tools:listitem="@layout/list_item"
+        android:background="#19673AB7"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

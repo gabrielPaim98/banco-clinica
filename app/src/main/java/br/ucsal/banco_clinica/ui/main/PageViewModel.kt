@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import br.ucsal.banco_clinica.db.ClinicaDatabase
 import br.ucsal.banco_clinica.db.EmpresaCliente
 import br.ucsal.banco_clinica.db.Funcionario
@@ -16,8 +15,7 @@ class PageViewModel : ViewModel() {
 
     private val _index = MutableLiveData<Int>()
     val text: LiveData<String> = Transformations.map(_index) {
-        dbType = it.toDbClass()
-        dbType?.javaClass?.simpleName
+        it.toDbClass().javaClass.simpleName
     }
 
     fun setIndex(index: Int) {
@@ -28,21 +26,18 @@ class PageViewModel : ViewModel() {
         _db = db
     }
 
-    private var dbType: Any? = null
-
-    private val _dataList = MutableLiveData<List<Any>>()
     val dataList: LiveData<out List<Any>>
         get() {
-            return when (dbType) {
-                is EmpresaCliente -> _db.clinicaDao.getAllEmpresas()
-                is Funcionario -> _db.clinicaDao.getAllFuncionarios()
-                is Medico -> _db.clinicaDao.getAllMedicos()
+            return when (_index.value) {
+                1 -> _db.clinicaDao.getAllEmpresas()
+                2 -> _db.clinicaDao.getAllFuncionarios()
+                3 -> _db.clinicaDao.getAllMedicos()
                 else -> MutableLiveData(emptyList())
             }
         }
 }
 
-fun Int.toDbClass(): Any {
+private fun Int.toDbClass(): Any {
     return when (this) {
         1 -> EmpresaCliente(0, "", "")
         2 -> Funcionario(0, "", "", 0)
