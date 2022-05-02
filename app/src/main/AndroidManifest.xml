@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BancoClinica">
         <activity
+            android:name=".InsertActivity"
+            android:label="@string/title_activity_insert"
+            android:theme="@style/Theme.BancoClinica.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.BancoClinica.NoActionBar">
