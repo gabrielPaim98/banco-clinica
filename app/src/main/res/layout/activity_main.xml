@@ -28,7 +28,7 @@
             android:background="?attr/colorPrimary"
             app:tabContentStart="56dp"
             app:tabIndicatorColor="@color/white"
-            app:tabMode="fixed"
+            app:tabMode="scrollable"
             app:tabSelectedTextColor="@android:color/white"
             app:tabTextColor="#CAB1ED" />
     </com.google.android.material.appbar.AppBarLayout>

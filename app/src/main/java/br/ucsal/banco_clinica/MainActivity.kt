@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         db = getDatabase(this)
 
-        populateDB()
+//        populateDB()
     }
 
     private fun populateDB() {

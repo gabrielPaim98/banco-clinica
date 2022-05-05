@@ -3,6 +3,11 @@
     <string name="tab_text_1">Empresa</string>
     <string name="tab_text_2">Funcionario</string>
     <string name="tab_text_3">Medico</string>
+    <string name="tab_text_4">Atestado</string>
+    <string name="tab_text_5">Exame</string>
+    <string name="tab_text_6">Endereço</string>
+    <string name="tab_text_7">Tipo Exame</string>
+    <string name="tab_text_8">Tipo Atestado</string>
     <string name="title_activity_insert">InsertActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
