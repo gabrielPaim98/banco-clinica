@@ -23,7 +23,7 @@ import java.util.*
 )
 data class Endereco(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0L,
     val rua: String,
     val estado: String,
     val cidade: String,
@@ -40,7 +40,7 @@ data class Endereco(
 @Entity(tableName = "empresa_cliente", indices = [Index(value = ["cnpj", "nome"], unique = true)])
 data class EmpresaCliente(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0L,
     val nome: String,
     val cnpj: String,
 )
@@ -61,7 +61,7 @@ data class EmpresaCliente(
 )
 data class Funcionario(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0L,
     val nome: String,
     val cpf: String,
     @ColumnInfo(name = "empresa_id", index = true) val empresaId: Long
@@ -90,34 +90,33 @@ data class Funcionario(
             parentColumns = ["id"],
             childColumns = ["medico_id"],
             onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = TipoExame::class,
+            parentColumns = ["id"],
+            childColumns = ["tipo_exame_id"],
+            onDelete = ForeignKey.CASCADE
         )
     ]
 )
 data class Exame(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0L,
     val data: Date,
     val relatorio: String,
     @ColumnInfo(name = "funcionario_id", index = true) val funcionarioId: Long,
     @ColumnInfo(name = "atestado_id", index = true) val atestadoId: Long,
-    @ColumnInfo(name = "medico_id", index = true) val medicoId: Long
+    @ColumnInfo(name = "medico_id", index = true) val medicoId: Long,
+    @ColumnInfo(name = "tipo_exame_id", index = true) val tipoExameId: Long
 )
 
 @Entity(
-    tableName = "tipo_exame", foreignKeys = [
-        ForeignKey(
-            entity = Exame::class,
-            parentColumns = ["id"],
-            childColumns = ["exame_id"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
+    tableName = "tipo_exame"
 )
 data class TipoExame(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
-    val nome: String,
-    @ColumnInfo(name = "exame_id", index = true) val exameId: Long
+    val id: Long = 0L,
+    val nome: String
 )
 
 
@@ -127,7 +126,7 @@ data class TipoExame(
 @Entity
 data class Medico(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0L,
     val nome: String,
     val crm: String
 )
@@ -149,7 +148,7 @@ data class Medico(
  */
 data class Atestado(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0L,
     val descricao: String,
     @ColumnInfo(name = "tipo_atestado_id", index = true) val tipoAtestadoId: Long
 )
@@ -157,7 +156,7 @@ data class Atestado(
 @Entity(tableName = "tipo_atestado")
 data class TipoAtestado(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0L,
     val nome: String,
 )
 

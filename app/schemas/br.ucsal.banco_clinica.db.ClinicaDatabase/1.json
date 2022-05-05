@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "aa741ebe8b79f9c1fb2350353af98cc2",
+    "identityHash": "1b8ac6a29413375bafff69d151439f38",
     "entities": [
       {
         "tableName": "Endereco",
@@ -193,7 +193,7 @@
       },
       {
         "tableName": "Exame",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `data` INTEGER NOT NULL, `relatorio` TEXT NOT NULL, `funcionario_id` INTEGER NOT NULL, `atestado_id` INTEGER NOT NULL, `medico_id` INTEGER NOT NULL, FOREIGN KEY(`funcionario_id`) REFERENCES `Funcionario`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`atestado_id`) REFERENCES `Atestado`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`medico_id`) REFERENCES `Medico`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `data` INTEGER NOT NULL, `relatorio` TEXT NOT NULL, `funcionario_id` INTEGER NOT NULL, `atestado_id` INTEGER NOT NULL, `medico_id` INTEGER NOT NULL, `tipo_exame_id` INTEGER NOT NULL, FOREIGN KEY(`funcionario_id`) REFERENCES `Funcionario`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`atestado_id`) REFERENCES `Atestado`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`medico_id`) REFERENCES `Medico`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`tipo_exame_id`) REFERENCES `tipo_exame`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -228,6 +228,12 @@
           {
             "fieldPath": "medicoId",
             "columnName": "medico_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tipoExameId",
+            "columnName": "tipo_exame_id",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -265,6 +271,15 @@
             ],
             "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_Exame_medico_id` ON `${TABLE_NAME}` (`medico_id`)"
+          },
+          {
+            "name": "index_Exame_tipo_exame_id",
+            "unique": false,
+            "columnNames": [
+              "tipo_exame_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Exame_tipo_exame_id` ON `${TABLE_NAME}` (`tipo_exame_id`)"
           }
         ],
         "foreignKeys": [
@@ -300,12 +315,23 @@
             "referencedColumns": [
               "id"
             ]
+          },
+          {
+            "table": "tipo_exame",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "tipo_exame_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
           }
         ]
       },
       {
         "tableName": "tipo_exame",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT NOT NULL, `exame_id` INTEGER NOT NULL, FOREIGN KEY(`exame_id`) REFERENCES `Exame`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -318,12 +344,6 @@
             "columnName": "nome",
             "affinity": "TEXT",
             "notNull": true
-          },
-          {
-            "fieldPath": "exameId",
-            "columnName": "exame_id",
-            "affinity": "INTEGER",
-            "notNull": true
           }
         ],
         "primaryKey": {
@@ -332,30 +352,8 @@
           ],
           "autoGenerate": true
         },
-        "indices": [
-          {
-            "name": "index_tipo_exame_exame_id",
-            "unique": false,
-            "columnNames": [
-              "exame_id"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_tipo_exame_exame_id` ON `${TABLE_NAME}` (`exame_id`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "Exame",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "exame_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
+        "indices": [],
+        "foreignKeys": []
       },
       {
         "tableName": "Medico",
@@ -473,7 +471,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aa741ebe8b79f9c1fb2350353af98cc2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1b8ac6a29413375bafff69d151439f38')"
     ]
   }
 }
